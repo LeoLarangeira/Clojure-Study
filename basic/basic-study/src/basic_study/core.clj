@@ -8,8 +8,8 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println (rain/is-both-divisible? 57))
-  (println (rain/convert 3))
-  (println (rain/convert 5))
+  (println (rain/is-not-divisible? 57))
+  (println (rain/convert 21))
+  (println (rain/convert 35))
   (println (rain/convert 7))
   (println (rain/convert 52)))

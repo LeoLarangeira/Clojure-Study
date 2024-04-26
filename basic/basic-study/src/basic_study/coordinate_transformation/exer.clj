@@ -19,18 +19,17 @@
 (defn compose-transform
   "Create a composition function that returns a function that 
    combines two functions to perform a repeatable transformation."
-  [f g])
+  [f g]
+  (fn [x y]
+    (apply g (f x y))))
 
 (defn memoize-transform
   "Returns a function that memoizes the last result.
    If the arguments are the same as the last call,
    the memoized result is returned."
   [f]
-  (let [result (atom nil)
-        args (atom nil)]
-    (fn [& new-args]
-      (if (= @args new-args)
-        @result)
-      (do 
-        (reset! args new-args)
-        (reset! args (apply f new-args))))))
+  (let [prev (atom nil)]
+    (fn [& args]
+      (if-let [prev-res (@prev args)]
+        prev-res
+        ((reset! prev {args (apply f args)}) args)))))

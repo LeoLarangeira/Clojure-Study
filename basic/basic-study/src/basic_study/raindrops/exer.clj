@@ -7,17 +7,18 @@
   (= (rem number 5) 0))
 (defn is-divisible-by-seven? [number]
   (= (rem number 7) 0))
-(defn is-both-divisible? [number]
-  (= (or (or (is-divisible-by-three? number) (is-divisible-by-seven? number)) (is-divisible-by-five? number)) true))
+(defn is-not-divisible? [number]
+  (not (or (is-divisible-by-three? number)
+           (is-divisible-by-five? number)
+           (is-divisible-by-seven? number))))
 
 
-(defn convert [number] ;; <- arglist goes here
-      ;; your code goes here 
-  (let [n (str number)
-        num number]
-    (println n)
-    (cond
-      (is-both-divisible? num) n
-      (is-divisible-by-three? num) "Pling"
-      (is-divisible-by-five? num) "Plang"
-      (is-divisible-by-seven? num) "Plong")))
+(defn convert [number]
+  (let [result (cond
+                 (is-not-divisible? number) (str number)
+                 (is-divisible-by-three? number) "Pling"
+                 (is-divisible-by-five? number) "Plang"
+                 (is-divisible-by-seven? number) "Plong")]
+    (if (empty? result)
+      (str number) ; fallback caso nenhum dos casos anteriores seja atendido
+      result)))
